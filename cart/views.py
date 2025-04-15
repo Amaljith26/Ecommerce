@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 import stripe
 from django.conf import settings
 from orders.views import create_order
+import os
 
 
 def index(request):
@@ -130,7 +131,7 @@ def update_quantity(request):
 
 
 
-stripe.api_key = settings.STRIPE_SECRET_KEY
+stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
 
 @csrf_exempt
 @login_required
