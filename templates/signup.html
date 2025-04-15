@@ -1,0 +1,75 @@
+{% load static %}
+{% include 'base.html' %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Sign Up </title>
+</head>
+
+<body>
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form" method="post">
+                    {% csrf_token %}
+					<span class="login100-form-title p-b-26">
+                        <strong> SIGN UP </strong>			 
+					</span>
+					<span class="login100-form-title p-b-48">
+						<i class=""></i>
+					</span>
+
+                    <div class="wrap-input100 validate-input" data-validate = "">
+						<input class="input100" type="text" name="name">
+						<span class="focus-input100" data-placeholder="Name"></span>
+					</div>
+
+                    <div class="wrap-input100 validate-input" data-validate = "">
+						<input class="input100" type="text" name="email">
+						<span class="focus-input100" data-placeholder="email"></span>
+					</div>
+
+                    <div class="wrap-input100 validate-input" data-validate = "">
+						<input class="input100" type="text" name="username">
+						<span class="focus-input100" data-placeholder="Username"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Enter password">
+						<span class="btn-show-pass">
+							<i class="zmdi zmdi-eye"></i>
+						</span>
+						<input class="input100" type="password1" name="password1">
+						<span class="focus-input100" data-placeholder="Password"></span>
+					</div>
+
+					<div class="wrap-input100 validate-input" data-validate="Confirm password">
+						<span class="btn-show-pass">
+							<i class="zmdi zmdi-eye"></i>
+						</span>
+						<input class="input100" type="password2" name="password2">
+						<span class="focus-input100" data-placeholder="Confirm Password"></span>
+					</div>
+
+					<div class="container-login100-form-btn">
+						<div class="wrap-login100-form-btn">
+							<div class="login100-form-bgbtn"></div>
+							<button class="login100-form-btn" style="background-color: #283779;">
+								Sign up
+							</button>
+						</div>
+					</div>
+					<div class="text-center p-t-20">
+						<span class="txt1">Already have an account?</span>
+						<a class="txt2" href="{% url 'login' %}"> Login here</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+
+	<div id="dropDownSelect1"></div>
+	
+</body>
+</html>

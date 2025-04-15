@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order History</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .order-list {
+      margin-top: 30px;
+    }
+    .order-item {
+      background-color: #f8f9fa;
+      border: 1px solid #ddd;
+      margin-bottom: 20px;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .order-header {
+      margin-bottom: 15px;
+    }
+    .order-header h3 {
+      font-size: 1.5em;
+      color: #007bff;
+    }
+    .order-details h4 {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+    }
+    .order-items {
+      list-style-type: none;
+      padding-left: 0;
+    }
+    .order-items li {
+      margin-bottom: 8px;
+      font-size: 1em;
+    }
+    .order-item-details {
+      display: flex;
+      justify-content: space-between;
+    }
+    .item-name {
+      font-weight: bold;
+      flex: 1;
+    }
+    .item-quantity, .item-price {
+      text-align: right;
+      width: 100px;
+    }
+    .order-footer {
+      margin-top: 20px;
+    }
+    .btn {
+      padding: 10px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+    }
+    .btn-info {
+      background-color: #17a2b8;
+      color: white;
+    }
+    .pagination {
+      text-align: center;
+      margin-top: 20px;
+    }
+    .pagination a {
+      padding: 5px 10px;
+      margin: 0 5px;
+      text-decoration: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 5px;
+    }
+    .pagination a:hover {
+      background-color: #0056b3;
+    }
+    .pagination span {
+      padding: 5px 10px;
+      margin: 0 5px;
+      background-color: #f8f9fa;
+      color: #333;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="my-4">Order History</h1>
+
+    {% if orders %}
+      <div class="order-list">
+        {% for order in orders %}
+          <div class="order-item">
+            <div class="order-header">
+              <h3>Order #{{ order.id }} ({{ order.status|capfirst }})</h3>
+              <p><strong>Date:</strong> {{ order.created_at|date:"D, d M Y H:i" }}</p>
+              <p><strong>Total Price:</strong> Rs {{ order.total_price }}</p>
+            </div>
+
+            <div class="order-details">
+              <h4>Order Items:</h4>
+              <ul class="order-items">
+                {% for item in order.order_items.all %}
+                  <li>
+                    <div class="order-item-details">
+                      <span class="item-name">{{ item.product.name }}</span>
+                      <span class="item-quantity">x{{ item.quantity }}</span>
+                      <span class="item-price">Rs {{ item.price }}</span>
+                    </div>
+                  </li>
+                {% endfor %}
+              </ul>
+            </div>
+
+            <div class="order-footer">
+              <a href="{% url 'home'  %}" class="btn btn-info">Home</a>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <div class="pagination">
+        {% if orders.has_previous %}
+          <a href="?page=1">&laquo; First</a>
+          <a href="?page={{ orders.previous_page_number }}">Previous</a>
+        {% endif %}
+        
+        <span>Page {{ orders.number }} of {{ orders.paginator.num_pages }}</span>
+        
+        {% if orders.has_next %}
+          <a href="?page={{ orders.next_page_number }}">Next</a>
+          <a href="?page={{ orders.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+      </div>
+
+    {% else %}
+      <p>You have no orders yet.</p>
+    {% endif %}
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.0/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
